@@ -1,3 +1,6 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable radix */
+/* eslint-disable consistent-return */
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
@@ -124,6 +127,7 @@ export const TransactionsProvider = ({ children }) => {
 
   const sendTransaction = async () => {
     try {
+      console.log("buraya geldi");
       if (ethereum) {
         const { addressTo, amount, keyword, message } = formData;
         const transactionsContract = createEthereumContract();
@@ -136,6 +140,7 @@ export const TransactionsProvider = ({ children }) => {
               from: currentAccount,
               to: addressTo,
               gas: "0x5208",
+              // eslint-disable-next-line no-underscore-dangle
               value: parsedAmount._hex,
             },
           ],
@@ -175,6 +180,7 @@ export const TransactionsProvider = ({ children }) => {
 
   return (
     <TransactionContext.Provider
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         transactionCount,
         connectWallet,
