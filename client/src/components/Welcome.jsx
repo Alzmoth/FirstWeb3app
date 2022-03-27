@@ -22,7 +22,6 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 const Welcome = () => {
   const [amounti, setAmount] = useState(0);
-
   const {
     currentAccount,
     connectWallet,
@@ -124,7 +123,6 @@ const Welcome = () => {
               <Input
                 placeholder="ETM(ETH*1.000.000)"
                 type="amount"
-                value={amounti}
                 name="keyword"
                 handleChange={handleChange}
               />
@@ -149,12 +147,10 @@ const Welcome = () => {
                 </button>
               )}
             </div>
-               </div>
+          </div>
         </div>
-   
       </div>
       <div className="flex w-full justify-center items-center">
-     
         <Game></Game>
       </div>
     </>
