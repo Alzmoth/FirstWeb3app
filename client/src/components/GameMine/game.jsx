@@ -11,8 +11,8 @@ const INITIAL_GRID = [
 ];
 const MINE_MULTIPLIER = {
   1: 1.11,
-  3: 1.32,
-  5: 1.42,
+  3: 1.18,
+  5: 1.25,
   24: 20,
 };
 
@@ -27,22 +27,16 @@ const Game = (props) => {
   const [grid, setGrid] = useState(INITIAL_GRID);
 
   const setValue = (i, j) => {
-    console.log(mines, "haydaa");
     let a = i * 5 + (j + 1);
-    if (mines.includes(a)) {
-      console.log("helo", mines);
-    }
     const newGrid = [...grid];
     if (newGrid[i][j] !== "-" || gameStatus == false) return;
 
     if (!mines.includes(i * 5 + j)) {
-      console.log(Math.random() * 25);
       var current = gameCurrentAmount * MINE_MULTIPLIER[gameType];
       setGameCurrentAmount(current);
       newGrid[i][j] = millify(current);
       setGrid(newGrid);
     } else {
-      console.log("geldi");
       endGame();
       newGrid[i][j] = "X";
       setGrid(newGrid);
@@ -50,10 +44,8 @@ const Game = (props) => {
   };
 
   const createMines = (mine) => {
-    console.log(mine);
     var tempMines = [];
     for (let i = 0; i < mine; ++i) {
-      console.log(mine, "anan", tempMines);
       var min = Math.floor(Math.random() * 25);
       if (tempMines.includes(min)) {
         i--;
@@ -62,7 +54,6 @@ const Game = (props) => {
       }
     }
     setMines(tempMines);
-    console.log(mines, "ffffff");
   };
 
   const gameStart = () => {
@@ -77,27 +68,20 @@ const Game = (props) => {
     setBalance((prev) => prev - gameAmount);
     setGameStatus(true);
     setGameCurrentAmount(gameAmount);
-    console.log(grid, "geldi baba", mines);
   };
   const endGame = () => {
     setGameStatus(false);
     const newGrid = [...grid];
     mines.forEach((mine) => {
-      console.log(mine);
       let i = Math.floor(mine / 5);
       let j = mine % 5;
-      console.log(i, j);
       newGrid[i][j] = "X";
     });
     setGrid(newGrid);
-    console.log(gameStatus);
   };
   const cashOut = () => {
-    console.log(gameStatus);
     if (gameStatus == true && grid !== INITIAL_GRID) {
-      console.log("anananı bacını sikeyim ", gameStatus);
       gameStatus && setBalance((prev) => prev + gameCurrentAmount);
-      console.log("oyun bitsin ", gameStatus);
     }
     endGame();
   };
