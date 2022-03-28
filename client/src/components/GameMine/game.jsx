@@ -64,6 +64,12 @@ const Game = (props) => {
       ["-", "-", "-", "-", "-"],
       ["-", "-", "-", "-", "-"],
     ]);
+    if (gameStatus == true) {
+      return alert("Game is already running, Firstly cash out the game");
+    }
+    if (gameAmount > balance) {
+      return alert("You don't have enough balance");
+    }
     createMines(gameType);
     setBalance((prev) => prev - gameAmount);
     setGameStatus(true);
