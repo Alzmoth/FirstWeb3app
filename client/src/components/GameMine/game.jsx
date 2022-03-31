@@ -149,7 +149,7 @@ const Game = (props) => {
             placeholder="Amount (ETM)"
             type="number"
             step="1"
-            value={gameAmount.toFixed(1)}
+            value={Number(gameAmount).toFixed(1)}
             max="1000"
             onChange={(e) => setGameAmount(e.target.value)}
             className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm text-right white-glassmorphism appearance-none"
