@@ -10,10 +10,10 @@ const INITIAL_GRID = [
   ["-", "-", "-", "-", "-"],
 ];
 const MINE_MULTIPLIER = {
-  1: 1.11,
-  3: 1.18,
-  5: 1.25,
-  24: 20,
+  1: 1.075,
+  3: 1.14,
+  5: 1.2,
+  24: 25,
 };
 
 const Game = (props) => {
@@ -23,6 +23,7 @@ const Game = (props) => {
   const [gameType, setGameType] = useState(1);
   const [gameStatus, setGameStatus] = useState(false);
   const [mines, setMines] = useState([]);
+  const [multiplier, setMultiplier] = useState(1);
 
   const [grid, setGrid] = useState(INITIAL_GRID);
 
@@ -32,7 +33,8 @@ const Game = (props) => {
     if (newGrid[i][j] !== "-" || gameStatus == false) return;
 
     if (!mines.includes(i * 5 + j)) {
-      var current = gameCurrentAmount * MINE_MULTIPLIER[gameType];
+      var current = gameCurrentAmount * multiplier;
+      setMultiplier((prev) => prev * 1.005);
       setGameCurrentAmount(current);
       newGrid[i][j] = millify(current);
       setGrid(newGrid);
@@ -70,6 +72,7 @@ const Game = (props) => {
     if (gameAmount > balance) {
       return alert("You don't have enough balance");
     }
+    setMultiplier(MINE_MULTIPLIER[gameType]);
     createMines(gameType);
     setBalance((prev) => prev - gameAmount);
     setGameStatus(true);
@@ -146,7 +149,7 @@ const Game = (props) => {
             placeholder="Amount (ETM)"
             type="number"
             step="1"
-            value={gameAmount}
+            value={gameAmount.toFixed(1)}
             max="1000"
             onChange={(e) => setGameAmount(e.target.value)}
             className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm text-right white-glassmorphism appearance-none"
@@ -199,14 +202,17 @@ const Game = (props) => {
 
         <div className=" flex-auto ml-10 mt-10 p-4 w-[25%] h-[10%] bg-gray-800">
           <div className="text-white ">Next Reward</div>
+          <div className="text-yellow-400">
+            Multiplier : {Number(multiplier).toFixed(4)}
+          </div>
           <div className="text-green-400">
-            {(gameCurrentAmount * (MINE_MULTIPLIER[gameType] - 1)).toFixed(1)}{" "}
+            {(gameCurrentAmount * (MINE_MULTIPLIER[gameType] - 1)).toFixed(1)}
           </div>
         </div>
         <div className=" flex-auto ml-5 mt-10 p-4 w-[25%] h-[10%] bg-gray-800">
           <div className="text-white ">Total Reward</div>
           <div className="text-green-400">
-            {Number(gameCurrentAmount).toFixed(1)}{" "}
+            {Number(gameCurrentAmount).toFixed(1)}
           </div>
         </div>
 
